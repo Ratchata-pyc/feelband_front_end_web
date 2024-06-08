@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "../../../components/Input";
 import validateRegister from "../validators/validate-register";
+import Button from "../../../components/Button";
 
 const initialInput = {
   firstName: "",
@@ -34,20 +35,23 @@ export default function Register() {
         return setInputError(error);
       }
       setInputError({ ...initialInputError });
+      // Log the form data
+      console.log("Form data:", input);
     } catch (err) {
       console.log(err);
-
-      if (err.response.data.field === "emailOrMobile")
+      if (err.response.data.field === "emailOrMobile") {
         setInputError((prev) => ({
           ...prev,
           emailOrMobile: "email or mobile already in use.",
         }));
+      }
     }
   };
+
   return (
-    <div className=" w-screen h-screen flex items-center justify-center ">
+    <div className="w-screen h-screen flex items-center justify-center">
       <form className="-mt-40" onSubmit={handleSubmitForm}>
-        <div className=" w-[300px] space-y-4">
+        <div className="w-[300px] space-y-4">
           <div>
             <h4 className="text-center text-2xl font-bold mb-4">Register</h4>
           </div>
@@ -98,6 +102,9 @@ export default function Register() {
               type="password"
             />
           </div>
+          <Button bg="stone" color="white" width="full" type="submit">
+            Submit
+          </Button>
         </div>
       </form>
     </div>

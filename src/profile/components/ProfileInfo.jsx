@@ -7,6 +7,7 @@ import AddLine from "./AddLine";
 
 export default function ProfileInfo() {
   const [open, setOpen] = useState(false);
+
   return (
     <div className=" mx-40  flex justify-center ">
       <div className="">
@@ -19,7 +20,7 @@ export default function ProfileInfo() {
               Edit Profile
             </Button>
             <Modal width={70} open={open} onClose={() => setOpen(false)}>
-              <EditProfileForm />
+              <EditProfileForm onClose={() => setOpen(false)} />
             </Modal>
             <Button width="40" bg="stone">
               Report

@@ -1,3 +1,4 @@
+// ReviewContainer.js
 import { useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
@@ -22,7 +23,7 @@ export default function ReviewContainer() {
             </div>
           </div>
           <Modal open={open} onClose={() => setOpen(false)}>
-            <ReviewForm />
+            <ReviewForm onClose={() => setOpen(false)} />
           </Modal>
           <Review user="Pasa" text="เล่นดีมาก"></Review>
           <Review user="Dog" text="ชอบสุดๆ"></Review>

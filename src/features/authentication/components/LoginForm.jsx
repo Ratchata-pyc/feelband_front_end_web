@@ -30,14 +30,17 @@ export default function LoginForm() {
       }
 
       setInputError(initialInputError);
+      console.log("Form data:", input); // Log the form data
+      // Here you can proceed with submitting the form data
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
-    <div className="w-screen h-screen flex items-center justify-center ">
+    <div className="w-screen h-screen flex items-center justify-center">
       <form className="-mt-40" onSubmit={handleSubmitForm}>
-        <div className=" w-[300px] space-y-4">
+        <div className="w-[300px] space-y-4">
           <div>
             <h4 className="text-center text-2xl font-bold mb-4">Login</h4>
           </div>
@@ -45,10 +48,10 @@ export default function LoginForm() {
           <div>
             <Input
               placeholder="Email address or phone number"
-              name="emailOrMobile"
-              value={input.emailOrMobile}
+              name="email"
+              value={input.email}
               onChange={handleChangeInput}
-              error={inputError.emailOrMobile}
+              error={inputError.email}
             />
           </div>
           <div>
@@ -63,7 +66,7 @@ export default function LoginForm() {
           </div>
 
           <div>
-            <Button bg="stone" color="white" width="full">
+            <Button bg="stone" color="white" width="full" type="submit">
               Submit
             </Button>
           </div>

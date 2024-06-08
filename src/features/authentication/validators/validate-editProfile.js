@@ -1,57 +1,46 @@
 import Joi from "joi";
 
-const profileSchema = Joi.object({
-  firstName: Joi.string()
-    .required()
-    .trim()
-    .messages({ "string.empty": "First name is required." }),
-  lastName: Joi.string()
-    .required()
-    .trim()
-    .messages({ "string.empty": "Last name is required." }),
-  contact: Joi.string()
-    .required()
-    .trim()
-    .messages({ "string.empty": "Line ID is required." }),
-  budget: Joi.number()
-    .required()
-    .messages({
-      "number.base": "Budget must be a number.",
-      "any.required": "Budget is required.",
-    }),
-  description: Joi.string()
-    .optional()
-    .allow("")
-    .messages({ "string.empty": "Description is required." }),
-  roles: Joi.array()
-    .items(
-      Joi.string().valid(
-        "Guitar",
-        "Bass",
-        "Piano",
-        "Voice",
-        "Drum",
-        "Saxophone"
-      )
-    )
-    .required()
-    .min(1)
-    .messages({
-      "array.min": "At least one role is required.",
-      "any.only": "Invalid role selected.",
-    }),
-  genres: Joi.array()
-    .items(Joi.string().valid("Pop", "Rock", "Jazz", "Blues"))
-    .required()
-    .min(1)
-    .messages({
-      "array.min": "At least one genre is required.",
-      "any.only": "Invalid genre selected.",
-    }),
+const editProfileSchema = Joi.object({
+  firstName: Joi.string().required().messages({
+    "string.empty": "First Name is required.",
+  }),
+  lastName: Joi.string().required().messages({
+    "string.empty": "Last Name is required.",
+  }),
+  contact: Joi.string().required().messages({
+    "string.empty": "Contact is required.",
+  }),
+  budget: Joi.number().required().messages({
+    "number.base": "Budget must be a number.",
+    "any.required": "Budget is required.",
+  }),
+  description: Joi.string().required().messages({
+    "string.empty": "Description is required.",
+  }),
+  role: Joi.string().required().messages({
+    "string.empty": "At least one role must be selected.",
+  }),
+  genre: Joi.string().required().messages({
+    "string.empty": "At least one genre must be selected.",
+  }),
+  province: Joi.string().required().messages({
+    "string.empty": "Province is required.",
+  }),
+  district: Joi.string().required().messages({
+    "string.empty": "District is required.",
+  }),
 });
 
-const validateProfile = (input) => {
-  const { error } = profileSchema.validate(input, { abortEarly: false });
+const validateEditProfile = (input, inputCheckbox, province, district) => {
+  const data = {
+    ...input,
+    role: inputCheckbox.role || "",
+    genre: inputCheckbox.genre || "",
+    province: province ? province.label : "",
+    district: district ? district.label : "",
+  };
+
+  const { error } = editProfileSchema.validate(data, { abortEarly: false });
 
   if (error) {
     const result = error.details.reduce((acc, el) => {
@@ -63,4 +52,4 @@ const validateProfile = (input) => {
   }
 };
 
-export default validateProfile;
+export default validateEditProfile;

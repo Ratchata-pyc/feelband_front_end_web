@@ -1,7 +1,7 @@
+// Modal.js
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import Button from "./Button";
 
 const bgMap = {
   amber: "bg-amber-100",
@@ -13,7 +13,6 @@ export default function Modal({
   children,
   open,
   onClose,
-  onSubmit, // เพิ่ม callback function สำหรับการ submit
   bg = "white",
 }) {
   useEffect(() => {
@@ -43,23 +42,15 @@ export default function Modal({
         createPortal(
           <>
             <div className="fixed inset-0 bg-black opacity-50 z-30"></div>
-            <div className="fixed inset-0 z-40" onMouseDown={onClose}>
+            <div className="fixed inset-0 z-40">
               <div className="flex justify-center items-center min-h-screen">
                 <div
                   className={`rounded-lg shadow-lg ${bgMap[bg]} overflow-auto`}
                   style={{ width: `${width}rem`, maxHeight: "90vh" }}
-                  onMouseDown={(e) => e.stopPropagation()}
                 >
                   <div className="p-4">
                     {children}
-                    <div className="flex justify-end mt-4 gap-2">
-                      <Button bg="green" onClick={onSubmit}>
-                        Submit
-                      </Button>
-                      <Button bg="red" onClick={onClose}>
-                        Cancel
-                      </Button>
-                    </div>
+                    <div className="flex justify-end mt-4 gap-2"></div>
                   </div>
                 </div>
               </div>
