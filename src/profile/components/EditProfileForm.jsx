@@ -199,9 +199,6 @@ export default function EditProfileForm({ onClose }) {
                         "Voice",
                         "Drum",
                         "Saxophone",
-                        "Voice",
-                        "Drum",
-                        "Saxophone",
                       ]}
                       onChange={(value) => handleCheckboxChange("role", value)}
                     />

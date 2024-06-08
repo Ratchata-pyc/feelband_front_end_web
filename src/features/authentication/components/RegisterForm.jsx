@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Input from "../../../components/Input";
-import validateRegister from "../validators/validate-register";
 import Button from "../../../components/Button";
+import validateRegister from "../validators/validate-register";
+import authApi from "../../../apis/auth";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const initialInput = {
   firstName: "",
@@ -22,6 +26,7 @@ const initialInputError = {
 export default function Register() {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
+  const navigate = useNavigate();
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -36,14 +41,20 @@ export default function Register() {
       }
       setInputError({ ...initialInputError });
       // Log the form data
+      await authApi.register(input);
+
+      toast.success("registered successfully. please log in to continue.");
       console.log("Form data:", input);
+      navigate("/login");
     } catch (err) {
       console.log(err);
-      if (err.response.data.field === "emailOrMobile") {
-        setInputError((prev) => ({
-          ...prev,
-          emailOrMobile: "email or mobile already in use.",
-        }));
+      if (err instanceof AxiosError) {
+        if (err.response.data.field === "email") {
+          setInputError((prev) => ({
+            ...prev,
+            email: "email already in use.",
+          }));
+        }
       }
     }
   };
