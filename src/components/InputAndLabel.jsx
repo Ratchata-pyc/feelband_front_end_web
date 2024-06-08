@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+
 export default function InputAndLabel({
   placeholder,
   type = "text",
@@ -7,10 +7,7 @@ export default function InputAndLabel({
   value,
   onChange,
   name,
-  label,
 }) {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
     <div className="flex flex-col w-full">
       <div className="relative">
@@ -26,6 +23,10 @@ export default function InputAndLabel({
           onChange={onChange}
           name={name}
         />
+        <div className="bg-red-200">
+          {error && <small className="absolute text-red-500 ">{error}</small>}
+        </div>
+
         {type === "password" && (
           <button
             type="button"
@@ -33,7 +34,6 @@ export default function InputAndLabel({
           ></button>
         )}
       </div>
-      {error && <small className="text-red-500 mt-1">{error}</small>}
     </div>
   );
 }

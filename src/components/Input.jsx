@@ -22,7 +22,7 @@ export default function Input({
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mb-4">
       <div className="relative">
         <input
           type={showPassword ? "text" : type}
@@ -37,6 +37,10 @@ export default function Input({
           onChange={onChange}
           name={name}
         />
+        <div className="bg-red-200">
+          {error && <small className="absolute text-red-500 ">{error}</small>}
+        </div>
+
         {type === "password" && (
           <button
             type="button"
@@ -52,7 +56,7 @@ export default function Input({
           </button>
         )}
       </div>
-      {error && <small className="text-red-500 mt-1">{error}</small>}
+      <div className="relative h-4 mt-1"></div>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+// validate-editProfile.js
+
 import Joi from "joi";
 
 const editProfileSchema = Joi.object({
@@ -14,7 +16,7 @@ const editProfileSchema = Joi.object({
     "number.base": "Budget must be a number.",
     "any.required": "Budget is required.",
   }),
-  description: Joi.string().required().messages({
+  description: Joi.string().allow("").messages({
     "string.empty": "Description is required.",
   }),
   role: Joi.string().required().messages({

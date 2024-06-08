@@ -58,7 +58,7 @@ export default function Selector({
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex gap-4">
       <div className="w-[205px]">
         <label
           htmlFor="province-select"
@@ -81,11 +81,13 @@ export default function Selector({
             </option>
           ))}
         </select>
+
         {errorProvince && (
-          <small className="text-red-500 mt-1">{errorProvince}</small>
+          <div className="bg-red-200">
+            {<small className="absolute text-red-500 ">{errorProvince}</small>}
+          </div>
         )}
       </div>
-
       <div className="w-[205px]">
         <label
           htmlFor="district-select"
@@ -111,7 +113,9 @@ export default function Selector({
             ))}
         </select>
         {errorDistrict && (
-          <small className="text-red-500 mt-1">{errorDistrict}</small>
+          <div className="bg-red-200">
+            {<small className="absolute text-red-500 ">{errorDistrict}</small>}
+          </div>
         )}
       </div>
     </div>

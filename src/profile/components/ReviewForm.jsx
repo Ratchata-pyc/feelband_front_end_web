@@ -40,11 +40,11 @@ export default function ReviewForm({ onClose }) {
           onChange={(e) => setReview({ ...review, message: e.target.value })}
         />
         <div className="flex justify-end space-x-2 mt-4">
-          <Button bg="green" type="submit">
-            Submit
-          </Button>
           <Button bg="red" type="button" onClick={onClose}>
             Cancel
+          </Button>
+          <Button bg="green" type="submit">
+            Submit
           </Button>
         </div>
       </form>

@@ -25,7 +25,6 @@ export default function ProfileInfo() {
             <Button width="40" bg="stone">
               Report
             </Button>
-            <Modal></Modal>
           </div>
         </div>
 

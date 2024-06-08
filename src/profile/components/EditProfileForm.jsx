@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Checkbox from "../../components/Checkbox";
@@ -63,33 +64,6 @@ export default function EditProfileForm({ onClose }) {
     setInputCheckbox((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleFormSubmit = (e) => {
-    if (e) e.preventDefault();
-
-    const validationErrors = validateEditProfile(
-      input,
-      inputCheckbox,
-      province,
-      district
-    );
-
-    if (validationErrors) {
-      setInputError(validationErrors);
-      return;
-    }
-
-    const data = {
-      ...input,
-      province: province ? province.label : null,
-      district: district ? district.label : null,
-      profileImage: profileImage,
-      role: inputCheckbox.role,
-      genre: inputCheckbox.genre,
-    };
-
-    console.log(data);
-  };
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -114,9 +88,44 @@ export default function EditProfileForm({ onClose }) {
     document.getElementById("fileInput").click();
   };
 
+  const handleFormSubmit = (e) => {
+    if (e) e.preventDefault();
+
+    const validationErrors = validateEditProfile(
+      input,
+      inputCheckbox,
+      province,
+      district
+    );
+
+    if (validationErrors) {
+      setInputError(validationErrors);
+      setInputErrorCheckbox(validationErrors);
+      return;
+    }
+
+    const data = {
+      ...input,
+      province: province ? province.label : null,
+      district: district ? district.label : null,
+      profileImage: profileImage,
+      role: inputCheckbox.role,
+      genre: inputCheckbox.genre,
+    };
+
+    if (!data.description) {
+      delete data.description; // ลบค่า description ถ้าไม่มีการกรอก
+    }
+
+    console.log(data);
+    if (onClose && typeof onClose === "function") {
+      onClose(); // Close modal after submit
+    }
+  };
+
   return (
     <form className="bg-white rounded relative" onSubmit={handleFormSubmit}>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto px-4 pt-4">
         <div className="grid grid-cols-2">
           <div>
             <div className="flex flex-col gap-8">
@@ -164,15 +173,6 @@ export default function EditProfileForm({ onClose }) {
                   />
                 </div>
               </div>
-              {/* <div className="area">
-                <Selector
-                  onProvinceChange={handleProvinceChange}
-                  onDistrictChange={handleDistrictChange}
-                  onChange={district ? district.label : "None"}
-                  value={district}
-                />
-                <div className="selection-info"></div>
-              </div> */}
 
               <div className="area">
                 <Selector
@@ -199,6 +199,9 @@ export default function EditProfileForm({ onClose }) {
                         "Voice",
                         "Drum",
                         "Saxophone",
+                        "Voice",
+                        "Drum",
+                        "Saxophone",
                       ]}
                       onChange={(value) => handleCheckboxChange("role", value)}
                     />
@@ -219,7 +222,7 @@ export default function EditProfileForm({ onClose }) {
                   </div>
                 </div>
               </div>
-              <div className="">
+              <div className="-mt-3">
                 <label
                   className="block text-gray-700 text-sm font-bold "
                   htmlFor="description"
@@ -274,11 +277,11 @@ export default function EditProfileForm({ onClose }) {
               />
             </div>
             <div className="flex justify-end space-x-2 mt-4">
-              <Button bg="green" type="submit">
-                Submit
-              </Button>
               <Button bg="red" type="button" onClick={onClose}>
                 Cancel
+              </Button>
+              <Button bg="green" type="submit">
+                Submit
               </Button>
             </div>
           </div>
