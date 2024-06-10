@@ -2,6 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FeelbandIcon } from "../icons";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import useAuth from "../hooks/useAuth";
 
 const getAccessToken = () => {
   return localStorage.getItem("ACCESS_TOKEN");
@@ -13,7 +14,7 @@ const checkIfAdmin = () => {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    console.log("Payload:", payload); // เพิ่มการแสดงผล payload
+
     return payload.isAdmin || false;
   } catch (error) {
     console.error("Invalid token format", error);
@@ -27,9 +28,10 @@ export default function Header() {
   const { logout } = useContext(AuthContext);
   const accessToken = getAccessToken();
   const isAdmin = checkIfAdmin();
+  const { authUser } = useAuth();
 
-  // console.log("AccessToken:", accessToken); // เพิ่มการแสดงผล accessToken
-  // console.log("IsAdmin:", isAdmin); // เพิ่มการแสดงผล isAdmin
+  console.log("AccessToken:", accessToken); // เพิ่มการแสดงผล accessToken
+  console.log("IsAdmin:", isAdmin); // เพิ่มการแสดงผล isAdmin
 
   const handleClickLogout = () => {
     logout();
@@ -74,7 +76,7 @@ export default function Header() {
         {accessToken && !isAdmin && (
           <>
             <Link
-              to="/profile"
+              to={`/profile/${authUser?.id}`}
               className="text-white hover:bg-stone-600 py-2 px-4 rounded"
             >
               Profile

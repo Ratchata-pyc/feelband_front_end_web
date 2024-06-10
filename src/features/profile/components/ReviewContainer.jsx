@@ -1,9 +1,10 @@
 // ReviewContainer.js
 import { useState } from "react";
-import Button from "../components/Button";
-import Modal from "../components/Modal";
-import Review from "../profile/components/Review";
-import ReviewForm from "../profile/components/ReviewForm";
+import Button from "../../../components/Button";
+import Modal from "../../../components/Modal";
+
+import ReviewForm from "./ReviewForm";
+import Review from "./Review";
 
 export default function ReviewContainer() {
   const [open, setOpen] = useState(false);

@@ -1,12 +1,9 @@
-import Footer from "../layouts/Footer";
-import Header from "../layouts/Header";
 import johnSrc from "../assets/profile_1.jpg";
 import DaengSrc from "../assets/profile_2.jpg";
-import Musician from "../profile/components/Musician";
+import Musician from "../features/profile/components/Musician";
 export default function SearchPage() {
   return (
     <>
-      <Header />
       <div className="shadow-md mx-16 h-screen bg-white">
         <div className=" py-8 px-4  ">
           <p>เราได้ค้นหาให้คุณแล้ว</p>
@@ -36,7 +33,6 @@ export default function SearchPage() {
           <Musician />
         </div>
       </div>
-      <Footer />
     </>
   );
 }

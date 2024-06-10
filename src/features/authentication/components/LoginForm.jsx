@@ -40,8 +40,6 @@ export default function LoginForm() {
       await login(input);
       navigate("/");
       toast.success("login successfully");
-      console.log("Form data:", input); // Log the form data
-      // Here you can proceed with submitting the form data
     } catch (err) {
       console.log(err);
       if (err instanceof AxiosError) {

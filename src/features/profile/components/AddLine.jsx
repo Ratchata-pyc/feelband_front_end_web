@@ -1,5 +1,5 @@
-import Button from "../../components/Button";
-import iconLine from "../../assets/iconLine.png";
+import Button from "../../../components/Button";
+import iconLine from "../../../assets/iconLine.png";
 
 const contact = "lipook";
 

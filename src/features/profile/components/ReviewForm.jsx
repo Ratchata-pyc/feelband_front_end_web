@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 
 export default function ReviewForm({ onClose }) {
   const [review, setReview] = useState({

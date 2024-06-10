@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Checkbox from "../../components/Checkbox";
-import InputAndLabel from "../../components/InputAndLabel";
-import defaultProfile from "../../../src/assets/defaultProfile.png";
-import Selector from "../../components/Selector";
-import Button from "../../components/Button"; // assuming you have a Button component
-import validateEditProfile from "../../features/authentication/validators/validate-editProfile";
+import Checkbox from "../../../components/Checkbox";
+import InputAndLabel from "../../../components/InputAndLabel";
+import defaultProfile from "../../../assets/defaultProfile.png";
+import Selector from "../../../components/Selector";
+import Button from "../../../components/Button"; // assuming you have a Button component
+import validateEditProfile from "../../../features/authentication/validators/validate-editProfile";
 
 const initialInput = {
   firstName: "",
