@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import Checkbox from "../../../components/Checkbox";
 import InputAndLabel from "../../../components/InputAndLabel";
 import defaultProfile from "../../../assets/defaultProfile.png";
 import Selector from "../../../components/Selector";
-import Button from "../../../components/Button"; // assuming you have a Button component
+import Button from "../../../components/Button";
 import validateEditProfile from "../../../features/authentication/validators/validate-editProfile";
 
 const initialInput = {
@@ -13,8 +11,8 @@ const initialInput = {
   lastName: "",
   contact: "",
   budget: "",
-  role: "",
-  genre: "",
+  roleId: "",
+  genreId: "",
   description: "",
 };
 
@@ -23,8 +21,8 @@ const initialInputError = {
   lastName: "",
   contact: "",
   budget: "",
-  role: "",
-  genre: "",
+  roleId: "",
+  genreId: "",
   description: "",
 };
 
@@ -52,10 +50,6 @@ export default function EditProfileForm({ onClose }) {
   };
 
   const [inputCheckbox, setInputCheckbox] = useState({
-    role: null,
-    genre: null,
-  });
-  const [inputErrorCheckbox, setInputErrorCheckbox] = useState({
     role: null,
     genre: null,
   });
@@ -88,7 +82,7 @@ export default function EditProfileForm({ onClose }) {
     document.getElementById("fileInput").click();
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     if (e) e.preventDefault();
 
     const validationErrors = validateEditProfile(
@@ -100,26 +94,39 @@ export default function EditProfileForm({ onClose }) {
 
     if (validationErrors) {
       setInputError(validationErrors);
-      setInputErrorCheckbox(validationErrors);
       return;
     }
 
     const data = {
       ...input,
-      province: province ? province.label : null,
-      district: district ? district.label : null,
+      province: province ? province.id : null,
+      district: district ? district.id : null,
       profileImage: profileImage,
-      role: inputCheckbox.role,
-      genre: inputCheckbox.genre,
+      roleId: inputCheckbox.role ? inputCheckbox.role.id : null,
+      genreId: inputCheckbox.genre ? inputCheckbox.genre.id : null,
     };
 
     if (!data.description) {
-      delete data.description; // ลบค่า description ถ้าไม่มีการกรอก
+      delete data.description;
     }
 
-    console.log(data);
-    if (onClose && typeof onClose === "function") {
-      onClose(); // Close modal after submit
+    // Step 2: ดูค่าของ data ก่อนส่งไป backend
+    console.log("Data to send:", data);
+
+    try {
+      // const response = await userApi.editProfile(data);
+
+      // Step 3: ดู response จาก backend
+      // console.log("Response from backend:", response.data);
+
+      // alert("Profile updated successfully!");
+      if (onClose && typeof onClose === "function") {
+        onClose();
+      }
+    } catch (error) {
+      // Step 4: ดู error message ในกรณีที่มีข้อผิดพลาด
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile.");
     }
   };
 
@@ -178,8 +185,8 @@ export default function EditProfileForm({ onClose }) {
                 <Selector
                   onProvinceChange={handleProvinceChange}
                   onDistrictChange={handleDistrictChange}
-                  errorProvince={inputError.province} // เพิ่มการส่ง error message
-                  errorDistrict={inputError.district} // เพิ่มการส่ง error message
+                  errorProvince={inputError.province}
+                  errorDistrict={inputError.district}
                 />
                 <div className="selection-info"></div>
               </div>
@@ -191,14 +198,14 @@ export default function EditProfileForm({ onClose }) {
                       title="Role"
                       name="role"
                       value={inputCheckbox.role}
-                      error={inputErrorCheckbox.role}
+                      error={inputError.roleId}
                       list={[
-                        "Guitar",
-                        "Bass",
-                        "Piano",
-                        "Voice",
-                        "Drum",
-                        "Saxophone",
+                        { id: 1, label: "Guitar" },
+                        { id: 2, label: "Bass" },
+                        { id: 3, label: "Piano" },
+                        { id: 4, label: "Voice" },
+                        { id: 5, label: "Drum" },
+                        { id: 6, label: "Saxophone" },
                       ]}
                       onChange={(value) => handleCheckboxChange("role", value)}
                     />
@@ -212,8 +219,13 @@ export default function EditProfileForm({ onClose }) {
                       title="Genre"
                       name="genre"
                       value={inputCheckbox.genre}
-                      error={inputErrorCheckbox.genre}
-                      list={["Pop", "Rock", "Jazz", "Blues"]}
+                      error={inputError.genreId}
+                      list={[
+                        { id: 1, label: "Pop" },
+                        { id: 2, label: "Rock" },
+                        { id: 3, label: "Jazz" },
+                        { id: 4, label: "Blues" },
+                      ]}
                       onChange={(value) => handleCheckboxChange("genre", value)}
                     />
                   </div>

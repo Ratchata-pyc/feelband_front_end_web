@@ -18,13 +18,6 @@ export default function AddLine() {
           {contact}
         </div>
       </Button>
-      {/* <button
-        className="bg-green-500 text-white py-2 rounded "
-        style={{ width: "250px" }}
-        onClick={handleAddLine}
-      >
-        Add Line
-      </button> */}
     </div>
   );
 }

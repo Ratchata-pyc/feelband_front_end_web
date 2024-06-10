@@ -1,5 +1,3 @@
-// validate-editProfile.js
-
 import Joi from "joi";
 
 const editProfileSchema = Joi.object({
@@ -19,27 +17,31 @@ const editProfileSchema = Joi.object({
   description: Joi.string().allow("").messages({
     "string.empty": "Description is required.",
   }),
-  role: Joi.string().required().messages({
-    "string.empty": "At least one role must be selected.",
+  roleId: Joi.number().required().messages({
+    "number.base": "At least one role must be selected.",
+    "any.required": "Role is required.",
   }),
-  genre: Joi.string().required().messages({
-    "string.empty": "At least one genre must be selected.",
+  genreId: Joi.number().required().messages({
+    "number.base": "At least one genre must be selected.",
+    "any.required": "Genre is required.",
   }),
-  province: Joi.string().required().messages({
-    "string.empty": "Province is required.",
+  province: Joi.number().required().messages({
+    "number.base": "Province is required.",
+    "any.required": "Province is required.",
   }),
-  district: Joi.string().required().messages({
-    "string.empty": "District is required.",
+  district: Joi.number().required().messages({
+    "number.base": "District is required.",
+    "any.required": "District is required.",
   }),
 });
 
 const validateEditProfile = (input, inputCheckbox, province, district) => {
   const data = {
     ...input,
-    role: inputCheckbox.role || "",
-    genre: inputCheckbox.genre || "",
-    province: province ? province.label : "",
-    district: district ? district.label : "",
+    province: province ? province.id : null,
+    district: district ? district.id : null,
+    roleId: inputCheckbox.role ? inputCheckbox.role.id : null,
+    genreId: inputCheckbox.genre ? inputCheckbox.genre.id : null,
   };
 
   const { error } = editProfileSchema.validate(data, { abortEarly: false });
@@ -52,6 +54,7 @@ const validateEditProfile = (input, inputCheckbox, province, district) => {
 
     return result;
   }
+  return null;
 };
 
 export default validateEditProfile;

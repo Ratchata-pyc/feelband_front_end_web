@@ -30,8 +30,8 @@ export default function Header() {
   const isAdmin = checkIfAdmin();
   const { authUser } = useAuth();
 
-  console.log("AccessToken:", accessToken); // เพิ่มการแสดงผล accessToken
-  console.log("IsAdmin:", isAdmin); // เพิ่มการแสดงผล isAdmin
+  // console.log("AccessToken:", accessToken); // เพิ่มการแสดงผล accessToken
+  // console.log("IsAdmin:", isAdmin); // เพิ่มการแสดงผล isAdmin
 
   const handleClickLogout = () => {
     logout();

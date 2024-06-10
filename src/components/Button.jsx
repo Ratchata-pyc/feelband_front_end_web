@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 const bgMap = {
   stone: "bg-stone-500 hover:bg-stone-600 ",
   green: "bg-green-500 hover:bg-green-600 ",

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import eyeOpen from "../assets/blind/eye-open.svg";
 import eyeClose from "../assets/blind/eye-close.svg";

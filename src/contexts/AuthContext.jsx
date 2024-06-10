@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect, createContext } from "react";
 import authApi from "../apis/auth";
 import {

@@ -1,5 +1,3 @@
-// Modal.js
-/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 

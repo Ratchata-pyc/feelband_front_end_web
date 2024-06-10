@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-/* eslint-disable react/prop-types */
 export default function Selector({
   onProvinceChange,
   onDistrictChange,
@@ -44,7 +43,7 @@ export default function Selector({
       setSelectedProvince(selectedOption);
       setSelectedDistrict(null); // รีเซ็ตค่าอำเภอเป็นค่าว่างเมื่อเปลี่ยนจังหวัด
     }
-    console.log(`Selected Province: ${selectedOption?.label}`);
+    // console.log(selectedOption);
     onProvinceChange(selectedOption); // เรียกฟังก์ชัน callback เมื่อค่าจังหวัดเปลี่ยนแปลง
   };
 
@@ -53,7 +52,7 @@ export default function Selector({
       (district) => district.id === parseInt(event.target.value)
     );
     setSelectedDistrict(selectedOption);
-    console.log(`Selected District: ${selectedOption?.label}`);
+    // console.log(selectedOption);
     onDistrictChange(selectedOption); // เรียกฟังก์ชัน callback เมื่อค่าอำเภอเปลี่ยนแปลง
   };
 
@@ -68,7 +67,7 @@ export default function Selector({
         </label>
         <select
           id="province-select"
-          value={selectedProvince?.id || ""}
+          value={selectedProvince || ""}
           onChange={handleProvinceChange}
           className="w-full focus:outline-none focus:ring-2 border border-gray-300  rounded-md px-2 py-2"
         >
@@ -97,7 +96,7 @@ export default function Selector({
         </label>
         <select
           id="district-select"
-          value={selectedDistrict?.id || ""}
+          value={selectedDistrict || ""}
           onChange={handleDistrictChange}
           className="w-full focus:outline-none focus:ring-2 border border-gray-300  rounded-md px-2 py-2"
           disabled={!selectedProvince}

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import defaultProfileImage from "../../../assets/defaultProfile.png";
 
 export default function Musician({
