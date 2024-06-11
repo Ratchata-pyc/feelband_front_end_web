@@ -1,6 +1,6 @@
 import johnSrc from "../assets/profile_1.jpg";
 import DaengSrc from "../assets/profile_2.jpg";
-import Musician from "../features/profile/components/Musician";
+import Musician from "../components/MusicianCard";
 export default function SearchPage() {
   return (
     <>

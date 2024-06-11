@@ -1,4 +1,4 @@
-import defaultProfileImage from "../../../assets/defaultProfile.png";
+import defaultProfileImage from "../assets/defaultProfile.png";
 
 export default function Musician({
   firstName,

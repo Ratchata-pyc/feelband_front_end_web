@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Checkbox from "../../../components/Checkbox";
 import InputAndLabel from "../../../components/InputAndLabel";
@@ -7,6 +8,8 @@ import Button from "../../../components/Button";
 import validateEditProfile from "../../../features/authentication/validators/validate-editProfile";
 import useProfile from "../hooks/useProfile";
 import userApi from "../../../apis/user";
+import axios from "axios"; // เพิ่ม axios สำหรับการอัพโหลดภาพ
+import { toast } from "react-toastify";
 
 const initialInput = {
   firstName: "",
@@ -28,17 +31,17 @@ const initialInputError = {
   description: "",
 };
 
-export default function EditProfileForm({ onClose, onProfileupdate }) {
+export default function EditProfileForm({ onClose }) {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
 
   const [province, setProvince] = useState(null);
   const [district, setDistrict] = useState(null);
-  const { profileUser } = useProfile();
+  const { profileUser, fetchProfileUser } = useProfile();
 
   const handleProvinceChange = (selectedOption) => {
     setProvince(selectedOption);
-    setDistrict(null); // รีเซ็ตค่า district เมื่อเปลี่ยน province
+    setDistrict(null);
   };
 
   const handleDistrictChange = (selectedOption) => {
@@ -47,6 +50,7 @@ export default function EditProfileForm({ onClose, onProfileupdate }) {
 
   const [profileImage, setProfileImage] = useState(defaultProfile);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [selectedImageFile, setSelectedImageFile] = useState(null); // เพิ่ม state สำหรับไฟล์ภาพที่เลือก
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -64,21 +68,23 @@ export default function EditProfileForm({ onClose, onProfileupdate }) {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setSelectedImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result);
         setIsImageUploaded(true);
       };
       reader.readAsDataURL(file);
-      e.target.value = null; // รีเซ็ตค่า input file หลังจากทำการเลือกไฟล์แล้ว
+      e.target.value = null;
     }
   };
 
   const handleImageRemove = (e) => {
-    e.stopPropagation(); // ป้องกันการเรียก triggerFileInput
+    e.stopPropagation();
     setProfileImage(defaultProfile);
     setIsImageUploaded(false);
-    document.getElementById("fileInput").value = null; // รีเซ็ตค่า input file
+    setSelectedImageFile(null);
+    document.getElementById("fileInput").value = null;
   };
 
   const triggerFileInput = () => {
@@ -100,40 +106,57 @@ export default function EditProfileForm({ onClose, onProfileupdate }) {
       return;
     }
 
-    const data = {
+    let profileImagePath = null;
+
+    if (selectedImageFile) {
+      const formData = new FormData();
+      formData.append("profileImage", selectedImageFile);
+      try {
+        const response = await axios.post(
+          "/api/upload-profile-image",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        profileImagePath = response.data.filePath;
+      } catch (error) {
+        console.error("Error uploading the file", error);
+        toast.error("Failed to upload profile image.");
+        return;
+      }
+    }
+
+    let data = {
       ...input,
       provinceId: province ? province.id : null,
       districtId: district ? district.id : null,
-      profileImage: profileImage,
+      profileImage: profileImagePath,
       roleId: inputCheckbox.role ? inputCheckbox.role.id : null,
       genreId: inputCheckbox.genre ? inputCheckbox.genre.id : null,
       id: profileUser.id,
     };
-
-    if (!data.description) {
-      delete data.description;
+    if (data.budget) {
+      data.budget = new Intl.NumberFormat().format(data.budget);
     }
 
-    // Step 2: ดูค่าของ data ก่อนส่งไป backend
-    console.log(data);
+    data = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== null && v !== "")
+    );
 
     try {
-      const response = await userApi.editProfile(data);
-      console.log(response);
-      // const response = await userApi.editProfile(data);
-
-      // Step 3: ดู response จาก backend
-      console.log("Response from backend:", response.data);
-
-      alert("Profile updated successfully!");
+      await userApi.editProfile(data);
+      toast.success("Profile updated successfully!");
+      fetchProfileUser();
 
       if (onClose && typeof onClose === "function") {
         onClose();
       }
     } catch (error) {
-      // Step 4: ดู error message ในกรณีที่มีข้อผิดพลาด
       console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
+      toast.error("Failed to update profile.");
     }
   };
 

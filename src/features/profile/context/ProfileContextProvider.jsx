@@ -11,16 +11,17 @@ export default function ProfileContextProvider({ children }) {
   const { userId } = useParams();
   const { authUser } = useAuth();
 
+  const fetchProfileUser = async () => {
+    try {
+      const res = await userApi.getProfileUser(userId);
+      setProfileUser(res.data.user);
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    const fetchProfileUser = async () => {
-      try {
-        const res = await userApi.getProfileUser(userId);
-        setProfileUser(res.data.user);
-        // console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchProfileUser();
   }, [userId]);
 
@@ -32,9 +33,10 @@ export default function ProfileContextProvider({ children }) {
 
   const value = {
     profileUser,
+    fetchProfileUser, // เพิ่ม fetchProfileUser ใน context
   };
 
-  // console.log("ProfileContext value:", value); // Log the context value
+  // console.log("ProfileContext value:", value);
 
   return (
     <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>

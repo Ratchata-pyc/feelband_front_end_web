@@ -1,38 +1,46 @@
 import Joi from "joi";
 
 const editProfileSchema = Joi.object({
-  firstName: Joi.string().required().messages({
+  firstName: Joi.string().allow("").optional().messages({
     "string.empty": "First Name is required.",
   }),
-  lastName: Joi.string().required().messages({
+  lastName: Joi.string().allow("").optional().messages({
     "string.empty": "Last Name is required.",
   }),
-  contact: Joi.string().required().messages({
+  contact: Joi.string().allow("").optional().messages({
     "string.empty": "Contact is required.",
   }),
-  budget: Joi.number().required().messages({
-    "number.base": "Budget must be a number.",
-    "any.required": "Budget is required.",
-  }),
-  description: Joi.string().allow("").messages({
+  budget: Joi.alternatives()
+    .try(Joi.number(), Joi.allow(null))
+    .optional()
+    .messages({
+      "number.base": "Budget must be a number.",
+    }),
+  description: Joi.string().allow("").optional().messages({
     "string.empty": "Description is required.",
   }),
-  roleId: Joi.number().required().messages({
+  roleId: Joi.number().optional().allow(null).messages({
     "number.base": "At least one role must be selected.",
-    "any.required": "Role is required.",
   }),
-  genreId: Joi.number().required().messages({
+  genreId: Joi.number().optional().allow(null).messages({
     "number.base": "At least one genre must be selected.",
-    "any.required": "Genre is required.",
   }),
-  province: Joi.number().required().messages({
-    "number.base": "Province is required.",
-    "any.required": "Province is required.",
+  province: Joi.number().optional().allow(null).messages({
+    "number.base": "Province must be a number.",
   }),
-  district: Joi.number().required().messages({
-    "number.base": "District is required.",
-    "any.required": "District is required.",
-  }),
+  district: Joi.number()
+    .optional()
+    .allow(null)
+    .when("province", {
+      is: Joi.exist().not(null),
+      then: Joi.number().required().messages({
+        "number.base": "District is required when Province is selected.",
+      }),
+      otherwise: Joi.allow(null),
+    })
+    .messages({
+      "number.base": "District must be a number.",
+    }),
 });
 
 const validateEditProfile = (input, inputCheckbox, province, district) => {
