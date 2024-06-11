@@ -14,7 +14,7 @@ const checkIfAdmin = () => {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-
+    console.log(payload);
     return payload.isAdmin || false;
   } catch (error) {
     console.error("Invalid token format", error);
@@ -42,7 +42,7 @@ export default function Header() {
     location.pathname === "/register" || location.pathname === "/login";
 
   return (
-    <header className="flex bg-stone-500 justify-between items-center h-16">
+    <header className="flex bg-stone-500 justify-between items-center h-16 z-10">
       <div className="px-8">
         <Link to="/">
           <FeelbandIcon />

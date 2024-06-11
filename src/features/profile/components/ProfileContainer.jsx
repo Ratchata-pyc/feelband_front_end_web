@@ -1,26 +1,16 @@
-import { useState, startTransition } from "react";
+import { useState } from "react";
 import Button from "../../../components/Button";
 import Modal from "../../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import ProfileInfo from "./ProfileInfo";
 import useProfile from "../hooks/useProfile";
+import ReportForm from "./ReportForm";
 
 export default function ProfileContainer() {
-  const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
   const { profileUser } = useProfile();
   if (!profileUser) return <h1>404!!! User was not found</h1>;
-
-  const handleOpen = () => {
-    startTransition(() => {
-      setOpen(true);
-    });
-  };
-
-  const handleClose = () => {
-    startTransition(() => {
-      setOpen(false);
-    });
-  };
 
   return (
     <div className="mx-40 flex justify-center">
@@ -30,15 +20,22 @@ export default function ProfileContainer() {
             <Button width="40" bg="stone">
               ON/OFF
             </Button>
-            <Button width="40" bg="stone" onClick={handleOpen}>
+            <Button width="40" bg="stone" onClick={() => setEditOpen(true)}>
               Edit Profile
             </Button>
-            <Modal width={70} open={open} onClose={handleClose}>
-              <EditProfileForm onClose={handleClose} />
+            <Modal
+              width={70}
+              open={editOpen}
+              onClose={() => setEditOpen(false)}
+            >
+              <EditProfileForm onClose={() => setEditOpen(false)} />
             </Modal>
-            <Button width="40" bg="stone">
+            <Button width="40" bg="stone" onClick={() => setReportOpen(true)}>
               Report
             </Button>
+            <Modal open={reportOpen} onClose={() => setReportOpen(false)}>
+              <ReportForm onClose={() => setReportOpen(false)} />
+            </Modal>
           </div>
         </div>
         <ProfileInfo />

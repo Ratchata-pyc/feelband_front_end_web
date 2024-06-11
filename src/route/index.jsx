@@ -6,6 +6,7 @@ import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import SearchPage from "../pages/SearchPage";
+import ReportPage from "../pages/ReportPage";
 
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "profile/:userId", element: <ProfilePage /> },
       { path: "/search", element: <SearchPage /> },
+      { path: "/report", element: <ReportPage /> },
     ],
   },
 
