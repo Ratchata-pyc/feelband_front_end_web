@@ -38,6 +38,7 @@ export default function LoginForm() {
 
       setInputError(initialInputError);
       await login(input);
+      console.log(input);
       navigate("/");
       toast.success("login successfully");
     } catch (err) {

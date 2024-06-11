@@ -5,6 +5,8 @@ import defaultProfile from "../../../assets/defaultProfile.png";
 import Selector from "../../../components/Selector";
 import Button from "../../../components/Button";
 import validateEditProfile from "../../../features/authentication/validators/validate-editProfile";
+import useProfile from "../hooks/useProfile";
+import userApi from "../../../apis/user";
 
 const initialInput = {
   firstName: "",
@@ -26,12 +28,13 @@ const initialInputError = {
   description: "",
 };
 
-export default function EditProfileForm({ onClose }) {
+export default function EditProfileForm({ onClose, onProfileupdate }) {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
 
   const [province, setProvince] = useState(null);
   const [district, setDistrict] = useState(null);
+  const { profileUser } = useProfile();
 
   const handleProvinceChange = (selectedOption) => {
     setProvince(selectedOption);
@@ -99,11 +102,12 @@ export default function EditProfileForm({ onClose }) {
 
     const data = {
       ...input,
-      province: province ? province.id : null,
-      district: district ? district.id : null,
+      provinceId: province ? province.id : null,
+      districtId: district ? district.id : null,
       profileImage: profileImage,
       roleId: inputCheckbox.role ? inputCheckbox.role.id : null,
       genreId: inputCheckbox.genre ? inputCheckbox.genre.id : null,
+      id: profileUser.id,
     };
 
     if (!data.description) {
@@ -111,15 +115,18 @@ export default function EditProfileForm({ onClose }) {
     }
 
     // Step 2: ดูค่าของ data ก่อนส่งไป backend
-    console.log("Data to send:", data);
+    console.log(data);
 
     try {
+      const response = await userApi.editProfile(data);
+      console.log(response);
       // const response = await userApi.editProfile(data);
 
       // Step 3: ดู response จาก backend
-      // console.log("Response from backend:", response.data);
+      console.log("Response from backend:", response.data);
 
-      // alert("Profile updated successfully!");
+      alert("Profile updated successfully!");
+
       if (onClose && typeof onClose === "function") {
         onClose();
       }

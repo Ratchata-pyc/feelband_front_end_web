@@ -10,7 +10,7 @@ export default function ProfileInfo() {
     return <h1>404!!! User was not found</h1>;
   }
 
-  console.log("Profile User Data:", profileUser); // Log profileUser data
+  // console.log("Profile User Data:", profileUser); // Log profileUser data
 
   return (
     <div className="flex justify-center items-center bg-white shadow-md mt-4 max-w-[1300px]">

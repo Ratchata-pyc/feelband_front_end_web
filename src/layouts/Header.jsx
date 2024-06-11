@@ -14,7 +14,7 @@ const checkIfAdmin = () => {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    console.log(payload);
+
     return payload.isAdmin || false;
   } catch (error) {
     console.error("Invalid token format", error);
