@@ -2,9 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Helvetica, Arial, sans-serif;
-  background-color: #f0f2f5;
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.scroll-container {
+  display: flex;
+  animation: scroll 20s linear infinite;
+}
+
+.space-x-4 > *:not(:last-child) {
+  margin-right: 1rem; /* Adjust the spacing as needed */
 }
 
 /* :root {

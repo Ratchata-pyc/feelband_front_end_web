@@ -1,8 +1,10 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FeelbandIcon } from "../icons";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import useAuth from "../hooks/useAuth";
+import Modal from "../components/Modal";
+import SearchForm from "../features/profile/components/SearchForm";
 
 const getAccessToken = () => {
   return localStorage.getItem("ACCESS_TOKEN");
@@ -29,9 +31,7 @@ export default function Header() {
   const accessToken = getAccessToken();
   const isAdmin = checkIfAdmin();
   const { authUser } = useAuth();
-
-  // console.log("AccessToken:", accessToken); // เพิ่มการแสดงผล accessToken
-  // console.log("IsAdmin:", isAdmin); // เพิ่มการแสดงผล isAdmin
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClickLogout = () => {
     logout();
@@ -40,6 +40,16 @@ export default function Header() {
 
   const hideSearchButton =
     location.pathname === "/register" || location.pathname === "/login";
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleSearchSubmit = (filters) => {
+    const query = new URLSearchParams(filters).toString();
+    navigate(`/search?${query}`);
+    setIsModalOpen(false);
+  };
 
   return (
     <header className="flex bg-stone-500 justify-between items-center h-16 z-10">
@@ -50,12 +60,12 @@ export default function Header() {
       </div>
       <div className="flex gap-4">
         {!hideSearchButton && (
-          <Link
-            to="/search"
+          <button
+            onClick={toggleModal}
             className="text-white hover:bg-stone-600 py-2 px-4 rounded"
           >
             Search
-          </Link>
+          </button>
         )}
         {!accessToken && (
           <>
@@ -106,6 +116,9 @@ export default function Header() {
           </>
         )}
       </div>
+      <Modal open={isModalOpen} onClose={toggleModal}>
+        <SearchForm onClose={toggleModal} onSubmit={handleSearchSubmit} />
+      </Modal>
     </header>
   );
 }
