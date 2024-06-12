@@ -49,7 +49,7 @@ export default function ProfileInfo() {
               <AddLine />
             </div>
             <div className="border-none py-4 px-8 mt-4 max-w-[600px]">
-              <p>{profileUser?.description || "No description available."}</p>
+              <p>{profileUser?.description || ""}</p>
             </div>
           </div>
         </div>

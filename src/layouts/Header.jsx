@@ -16,7 +16,6 @@ const checkIfAdmin = () => {
 
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-
     return payload.isAdmin || false;
   } catch (error) {
     console.error("Invalid token format", error);
@@ -31,7 +30,7 @@ export default function Header() {
   const accessToken = getAccessToken();
   const isAdmin = checkIfAdmin();
   const { authUser } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalSearchOpen, setIsModalSearchOpen] = useState(false);
 
   const handleClickLogout = () => {
     logout();
@@ -41,14 +40,14 @@ export default function Header() {
   const hideSearchButton =
     location.pathname === "/register" || location.pathname === "/login";
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const toggleModalSearch = () => {
+    setIsModalSearchOpen(!isModalSearchOpen);
   };
 
-  const handleSearchSubmit = (filters) => {
-    const query = new URLSearchParams(filters).toString();
-    navigate(`/search?${query}`);
-    setIsModalOpen(false);
+  const closeSearchModal = () => {
+    setIsModalSearchOpen(false);
+    // ถ้ามีการเปิด Modal อื่นๆ ที่อาจเป็นปัญหา ให้ปิดที่นี่ เช่น:
+    // setIsReviewOpen(false);
   };
 
   return (
@@ -61,7 +60,7 @@ export default function Header() {
       <div className="flex gap-4">
         {!hideSearchButton && (
           <button
-            onClick={toggleModal}
+            onClick={toggleModalSearch}
             className="text-white hover:bg-stone-600 py-2 px-4 rounded"
           >
             Search
@@ -116,8 +115,8 @@ export default function Header() {
           </>
         )}
       </div>
-      <Modal open={isModalOpen} onClose={toggleModal}>
-        <SearchForm onClose={toggleModal} onSubmit={handleSearchSubmit} />
+      <Modal open={isModalSearchOpen} onClose={closeSearchModal}>
+        <SearchForm onClose={closeSearchModal} />
       </Modal>
     </header>
   );
