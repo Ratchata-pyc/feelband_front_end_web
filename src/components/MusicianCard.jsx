@@ -19,7 +19,7 @@ export default function Musician({
     >
       <div className="relative h-full">
         <img className="w-full h-full object-cover" src={src} alt="Profile" />
-        <div className="absolute -bottom-12 left-0 right-0 bg-white p-4 rounded-t-lg max-h-36 min-h-36">
+        <div className="absolute -bottom-12 left-0 right-0 bg-stone-100 p-4 rounded-t-lg max-h-36 min-h-36">
           <p>{`${firstName} ${lastName}`}</p>
           <p>{`${role}, ${genre}`}</p>
           <p>{`${provider}, ${district}`}</p>

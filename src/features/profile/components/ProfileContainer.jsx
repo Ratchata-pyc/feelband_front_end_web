@@ -72,18 +72,20 @@ export default function ProfileContainer() {
                 </Modal>
               </>
             ) : (
-              <>
-                <Button
-                  width="40"
-                  bg="stone"
-                  onClick={() => setReportOpen(true)}
-                >
-                  Report
-                </Button>
-                <Modal open={reportOpen} onClose={() => setReportOpen(false)}>
-                  <ReportForm onClose={() => setReportOpen(false)} />
-                </Modal>
-              </>
+              !isAdmin && ( // แสดงปุ่ม Report เฉพาะถ้าผู้ใช้งานไม่ใช่ admin
+                <>
+                  <Button
+                    width="40"
+                    bg="stone"
+                    onClick={() => setReportOpen(true)}
+                  >
+                    Report
+                  </Button>
+                  <Modal open={reportOpen} onClose={() => setReportOpen(false)}>
+                    <ReportForm onClose={() => setReportOpen(false)} />
+                  </Modal>
+                </>
+              )
             )}
             {isAdmin && !isOwnProfile && (
               <Button width="40" bg="stone" onClick={() => alert("Ban User")}>

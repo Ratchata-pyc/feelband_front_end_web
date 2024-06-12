@@ -6,7 +6,19 @@ export default function GetAllUserProfile({ onDataFetched }) {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/users/all");
-        onDataFetched(response.data);
+        const completeUsers = response.data.filter(
+          (user) =>
+            user.id &&
+            user.firstName &&
+            user.lastName &&
+            user.role &&
+            user.genre &&
+            user.province &&
+            user.district &&
+            user.budget
+          // user.profileImage
+        );
+        onDataFetched(completeUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
       }

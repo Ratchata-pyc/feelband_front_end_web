@@ -1,34 +1,36 @@
-// import { useState, startTransition } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 import ReportItem from "./ReportItem";
 
-// import Button from "../../../components/Button";
-
 export default function ReportContainer() {
-  // const [open, setOpen] = useState(false);
+  const [reports, setReports] = useState([]);
 
-  // const handleOpen = () => {
-  //   startTransition(() => {
-  //     setOpen(true);
-  //   });
-  // };
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const response = await axios.get("/api/reports");
+        setReports(response.data);
+      } catch (error) {
+        console.error("Error fetching reports:", error);
+      }
+    };
 
-  // const handleClose = () => {
-  //   startTransition(() => {
-  //     setOpen(false);
-  //   });
-  // };
+    fetchReports();
+  }, []);
+
+  const handleDelete = (deletedReportId) => {
+    setReports(reports.filter((report) => report.id !== deletedReportId));
+  };
 
   return (
-    <div className="shadow-md mx-16  bg-white h-full pb-8">
+    <div className="shadow-md mx-16 bg-white h-full pb-8">
       <div className="pt-8 pl-8">
-        <div>มี x Report</div>
+        <div>Report {reports.length} message</div>
       </div>
-
-      <div className="flex flex-col items-center h-full overflow-scroll  gap-16">
-        <ReportItem />
-        <ReportItem />
-        <ReportItem />
+      <div className="flex flex-col items-center h-full overflow-scroll gap-16">
+        {reports.map((report) => (
+          <ReportItem key={report.id} report={report} onDelete={handleDelete} />
+        ))}
       </div>
     </div>
   );
