@@ -16,7 +16,6 @@ export default function GetAllUserProfile({ onDataFetched }) {
             user.province &&
             user.district &&
             user.budget
-          // user.profileImage
         );
         onDataFetched(completeUsers);
       } catch (error) {

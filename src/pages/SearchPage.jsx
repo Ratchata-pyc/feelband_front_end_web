@@ -113,6 +113,7 @@ export default function SearchPage() {
             provider={user.province ? user.province.province : "N/A"}
             district={user.district ? user.district.district : "N/A"}
             budget={formatBudget(user.budget)}
+            isActive={user.isActive}
           />
         ))}
       </div>
