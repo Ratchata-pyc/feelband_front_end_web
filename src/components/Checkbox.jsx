@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Checkbox({ title, list, error, onChange }) {
-  const [selected, setSelected] = useState(null);
+export default function Checkbox({ title, list, error, onChange, selected }) {
+  const [localSelected, setLocalSelected] = useState(selected);
+
+  useEffect(() => {
+    setLocalSelected(selected);
+  }, [selected]);
 
   // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของ checkbox
   const handleChange = (item) => {
-    const newSelected = selected?.id === item.id ? null : item;
-    setSelected(newSelected);
+    const newSelected = localSelected?.id === item.id ? null : item;
+    setLocalSelected(newSelected);
 
     const selectedObject = newSelected
       ? { id: newSelected.id, label: newSelected.label }
@@ -31,7 +35,7 @@ export default function Checkbox({ title, list, error, onChange }) {
                     ? "border-red-500 focus:ring-red-300"
                     : "border-gray-300 focus:border-stone-500 focus:ring-stone-300"
                 }`}
-                checked={selected?.id === item.id}
+                checked={localSelected?.id === item.id}
                 onChange={() => handleChange(item)}
               />
               <span className="ml-2 text-gray-700">{item.label}</span>

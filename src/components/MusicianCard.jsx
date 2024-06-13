@@ -17,7 +17,7 @@ export default function Musician({
   return (
     <Link
       to={`/profile/${userId}`}
-      className="relative flex flex-col border-4 border-stone-400 rounded-lg justify-between min-h-[430px] max-h-[430px] overflow-hidden"
+      className="relative flex flex-col border-4 border-stone-400 rounded-lg justify-between min-h-[650px] max-h-[650px] overflow-hidden"
     >
       <div className="relative h-full">
         <img className="w-full h-full object-cover" src={src} alt="Profile" />
@@ -33,7 +33,7 @@ export default function Musician({
 
       {!isActive && (
         <div className="absolute  flex justify-center items-center">
-          <img src={banLogo} className="flex h-[350px]" />
+          <img src={banLogo} className="flex h-[600px]" />
         </div>
       )}
     </Link>

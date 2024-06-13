@@ -1,10 +1,12 @@
 import Router from "./route";
+import { Suspense } from "react";
 import AuthContextProvider from "./contexts/AuthContext";
 import { Slide, ToastContainer } from "react-toastify";
+import Spinner from "./components/Spinner";
 
 function App() {
   return (
-    <>
+    <Suspense fallback={<Spinner />}>
       <AuthContextProvider>
         <Router />
         <ToastContainer
@@ -13,7 +15,7 @@ function App() {
           transition={Slide}
         />
       </AuthContextProvider>
-    </>
+    </Suspense>
   );
 }
 

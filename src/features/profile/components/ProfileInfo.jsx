@@ -13,13 +13,17 @@ export default function ProfileInfo() {
 
   console.log("Profile User Data:", profileUser); // Log profileUser data
 
+  const formatBudget = (budget) => {
+    return new Intl.NumberFormat("en-US", { style: "decimal" }).format(budget);
+  };
+
   return (
     <div className="relative flex justify-center items-center bg-white shadow-md mt-4 max-w-[1300px]">
       <div className="grid grid-cols-2">
         <div className="flex justify-end items-center">
-          <div className="flex justify-center items-start overflow-hidden">
+          <div className="flex justify-center items-start w-[600px] h-[700px] overflow-hidden">
             <img
-              className="flex w-[600px] h-[700px]"
+              className=" h-[700px]"
               src={profileUser?.profileImage || defaultAvatar}
               alt="Profile"
             />
@@ -48,7 +52,9 @@ export default function ProfileInfo() {
               </p>
               <p>Budget:</p>
               {profileUser?.budget ? (
-                <p className="w-full whitespace-nowrap col-span-3">{`${profileUser.budget} Bath`}</p>
+                <p className="w-full whitespace-nowrap col-span-3">{`${formatBudget(
+                  profileUser.budget
+                )} Bath`}</p>
               ) : (
                 <p>N/A</p>
               )}

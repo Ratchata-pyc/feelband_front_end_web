@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "../../../components/Button";
 import Modal from "../../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import ProfileInfo from "./ProfileInfo";
-import useProfile from "../hooks/useProfile";
+import { ProfileContext } from "../context/ProfileContextProvider";
 import ReportForm from "./ReportForm";
 import axios from "axios";
 
@@ -40,18 +40,52 @@ const getUserIdFromToken = () => {
   }
 };
 
+// ฟังก์ชันสำหรับตรวจสอบว่าผู้ใช้มีข้อมูลครบถ้วนหรือไม่
+const checkUserInformationComplete = (user) => {
+  const requiredFields = [
+    "firstName",
+    "lastName",
+    "role",
+    "genre",
+    "province",
+    "district",
+    "budget",
+  ];
+  const incompleteFields = requiredFields.filter((field) => !user[field]);
+
+  if (incompleteFields.length > 0) {
+    alert(`กรุณากรอกข้อมูลให้ครบถ้วน: ${incompleteFields.join(", ")}`);
+    return false;
+  }
+
+  return true;
+};
+
 export default function ProfileContainer() {
   const [editOpen, setEditOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
-  const { profileUser, fetchProfileUser } = useProfile();
+  const { profileUser, fetchProfileUser } = useContext(ProfileContext);
   const isAdmin = checkIfAdmin();
   const currentUserId = getUserIdFromToken();
+  const isGuest = !getAccessToken(); // ตรวจสอบว่าเป็น guest หรือไม่
 
   if (!profileUser) return <h1>404!!! User was not found</h1>;
 
   const isOwnProfile = profileUser.id === currentUserId;
 
   const toggleAvailability = async () => {
+    if (profileUser.isAvailable) {
+      // ถ้ากำลังปิดการรับงานไม่ต้องตรวจสอบข้อมูล
+      updateAvailabilityStatus();
+    } else {
+      // ตรวจสอบข้อมูลก่อนเปิดการรับงาน
+      if (checkUserInformationComplete(profileUser)) {
+        updateAvailabilityStatus();
+      }
+    }
+  };
+
+  const updateAvailabilityStatus = async () => {
     try {
       const newStatus = !profileUser.isAvailable;
       await axios.patch(`/users/update-availability/${profileUser.id}`, {
@@ -105,7 +139,8 @@ export default function ProfileContainer() {
                 </Modal>
               </>
             ) : (
-              !isAdmin && ( // แสดงปุ่ม Report เฉพาะถ้าผู้ใช้งานไม่ใช่ admin
+              !isAdmin &&
+              !isGuest && ( // แสดงปุ่ม Report เฉพาะถ้าผู้ใช้งานไม่ใช่ admin และไม่ใช่ guest
                 <>
                   <Button
                     width="40"

@@ -62,6 +62,7 @@ export default function ReviewContainer() {
   };
 
   const isAdmin = checkIfAdmin();
+  const isGuest = !localStorage.getItem("ACCESS_TOKEN"); // ตรวจสอบว่าเป็น guest หรือไม่
 
   if (!profileUser) {
     console.log("Profile user not found"); // Log when profileUser is not found
@@ -79,7 +80,7 @@ export default function ReviewContainer() {
               <h2>Review</h2>
             </div>
             <div className="flex justify-end">
-              {!isOwnProfile && (
+              {!isOwnProfile && !isGuest && (
                 <Button
                   bg="stone"
                   width="40"

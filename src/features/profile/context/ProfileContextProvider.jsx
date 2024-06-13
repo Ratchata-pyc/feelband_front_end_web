@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, createContext } from "react";
 import { useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";

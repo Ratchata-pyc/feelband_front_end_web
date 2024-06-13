@@ -5,6 +5,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import useAuth from "../hooks/useAuth";
 import Modal from "../components/Modal";
 import SearchForm from "../features/profile/components/SearchForm";
+import searchIcon from "../assets/search.svg";
 
 const getAccessToken = () => {
   return localStorage.getItem("ACCESS_TOKEN");
@@ -46,8 +47,6 @@ export default function Header() {
 
   const closeSearchModal = () => {
     setIsModalSearchOpen(false);
-    // ถ้ามีการเปิด Modal อื่นๆ ที่อาจเป็นปัญหา ให้ปิดที่นี่ เช่น:
-    // setIsReviewOpen(false);
   };
 
   return (
@@ -57,14 +56,19 @@ export default function Header() {
           <FeelbandIcon />
         </Link>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center justify-center">
         {!hideSearchButton && (
-          <button
-            onClick={toggleModalSearch}
-            className="text-white hover:bg-stone-600 py-2 px-4 rounded"
-          >
-            Search
-          </button>
+          <div>
+            <button
+              onClick={toggleModalSearch}
+              className="text-white bg-stone-600 hover:bg-stone-800 py-2 px-4 rounded w-[140px] flex items-center  justify-end gap-4"
+            >
+              Search
+              <div className=" w-6">
+                <img src={searchIcon}></img>
+              </div>
+            </button>
+          </div>
         )}
         {!accessToken && (
           <>
