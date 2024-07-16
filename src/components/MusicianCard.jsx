@@ -18,7 +18,7 @@ export default function Musician({
   return (
     <Link
       to={`/profile/${userId}`}
-      className="relative flex flex-col border-4 border-stone-400 rounded-lg justify-between min-h-[300px] max-h-[800px] overflow-hidden  xs:w-[300px] xs:h-[400px]  sm:w-[400px] sm:h-[530px]"
+      className="relative flex flex-col border-4 border-stone-400 rounded-lg justify-between min-h-[300px] max-h-[800px] overflow-hidden  xs:w-[300px] xs:h-[400px]  sm:w-[300px] sm:h-[450px] md:w-[500px] md:h-[640px]"
     >
       <div className="relative flex justify-center items-center h-full w-full ">
         <div className=" absolute top-0">

@@ -8,6 +8,7 @@ export default {
         xs: "480px",
         sm: "900px",
         md: "1755px",
+        pc: "1800px",
         // สามารถเพิ่ม screen sizes ตามที่คุณต้องการ
       },
     },
