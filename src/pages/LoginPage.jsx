@@ -7,14 +7,16 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-2 bg-white">
-        <div className="flex items-center justify-center pb-36">
+      <div className="flex flex-col lg:grid lg:grid-cols-2 bg-white min-h-screen mt-16 sm:mt-0">
+        <div className="flex items-center justify-center py-8 lg:py-0">
           <Link to="/">
-            <LogoBig />
+            <LogoBig className="block w-1/3 lg:hidden" />
           </Link>
         </div>
-        <div className="flex items-center justify-center ">
-          <LoginForm />
+        <div className="flex items-center justify-center mt-[-20px] lg:mt-0">
+          <div className="w-full max-w-md">
+            <LoginForm />
+          </div>
         </div>
       </div>
     </>

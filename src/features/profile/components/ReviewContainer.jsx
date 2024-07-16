@@ -65,7 +65,7 @@ export default function ReviewContainer() {
   const isGuest = !localStorage.getItem("ACCESS_TOKEN"); // ตรวจสอบว่าเป็น guest หรือไม่
 
   if (!profileUser) {
-    console.log("Profile user not found"); // Log when profileUser is not found
+    // console.log("Profile user not found"); // Log when profileUser is not found
     return <div className="min-h-[630px]"></div>;
   }
 
@@ -74,8 +74,8 @@ export default function ReviewContainer() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="py-8 px-16 min-w-[1300px] max-w-[1300px]">
-          <div className="grid grid-cols-2">
+        <div className="py-8 px-4 sm:px-8 md:px-16 min-w-[90vw] max-w-[1300px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2">
             <div className="flex justify-start items-center">
               <h2>Review</h2>
             </div>
@@ -99,6 +99,7 @@ export default function ReviewContainer() {
               reviews.map((review) => (
                 <Review
                   key={review.id}
+                  profileImage={review.profileImage}
                   user={`${review.senderFirstName} ${review.senderLastName}`}
                   text={review.content}
                   senderId={review.senderId}

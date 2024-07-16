@@ -39,11 +39,11 @@ export default function Modal({
       {open &&
         createPortal(
           <>
-            <div className="fixed inset-0 bg-black opacity-50 z-30 "></div>
-            <div className="fixed inset-0 z-40 ">
+            <div className="fixed inset-0 bg-black opacity-50 z-30"></div>
+            <div className="fixed inset-0 z-40">
               <div className="flex justify-center items-center min-h-screen">
                 <div
-                  className={`rounded-lg shadow-lg ${bgMap[bg]} overflow-auto `}
+                  className={`relative rounded-lg shadow-lg ${bgMap[bg]} overflow-auto`}
                   style={{ width: `${width}rem`, maxHeight: "90vh" }}
                 >
                   <div className="p-4">

@@ -94,40 +94,43 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="shadow-md mx-16 bg-white min-h-[1024px]">
-      <div className="py-8 px-4">
-        <p>ผลการค้นหา</p>
-        <p>พบนักดนตรี {users.length} คน</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pl-4 pr-4 pb-8">
-        {users.slice(0, visibleUsers).map((user, index) => (
-          <Musician
-            key={`${user.id}-${index}`}
-            userId={user.id} // ส่ง userId เป็น prop
-            firstName={user.firstName}
-            lastName={user.lastName}
-            src={user.profileImage || defaultProfileImage}
-            role={user.role ? user.role.role : "N/A"}
-            genre={user.genre ? user.genre.genre : "N/A"}
-            provider={user.province ? user.province.province : "N/A"}
-            district={user.district ? user.district.district : "N/A"}
-            budget={formatBudget(user.budget)}
-            isActive={user.isActive}
-          />
-        ))}
-      </div>
-
-      {visibleUsers < users.length && (
-        <div className="text-center pb-8">
-          <button
-            onClick={loadMoreUsers}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            แสดงผลเพิ่มเติม
-          </button>
+    <div className="bg-white w-full">
+      <div className="shadow-md mx-4 sm:mx-16 bg-white min-h-[800px] sm:min-h-[1024px] mt-[60px]">
+        <div className="py-8 px-4">
+          <p>ผลการค้นหา</p>
+          <p>พบนักดนตรี {users.length} คน</p>
         </div>
-      )}
+        <div className="items-center xs:flex  w-full justify-center ">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-4 pl-2 pr-2 sm:pl-4 sm:pr-4 pb-4 sm:pb-8 ">
+            {users.slice(0, visibleUsers).map((user, index) => (
+              <Musician
+                key={`${user.id}-${index}`}
+                userId={user.id} // ส่ง userId เป็น prop
+                firstName={user.firstName}
+                lastName={user.lastName}
+                src={user.profileImage || defaultProfileImage}
+                role={user.role ? user.role.role : "N/A"}
+                genre={user.genre ? user.genre.genre : "N/A"}
+                provider={user.province ? user.province.province : "N/A"}
+                district={user.district ? user.district.district : "N/A"}
+                budget={formatBudget(user.budget)}
+                isActive={user.isActive}
+              />
+            ))}
+          </div>
+        </div>
+
+        {visibleUsers < users.length && (
+          <div className="text-center pb-8">
+            <button
+              onClick={loadMoreUsers}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              แสดงผลเพิ่มเติม
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

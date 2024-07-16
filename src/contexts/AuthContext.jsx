@@ -5,7 +5,6 @@ import {
   removeAccessToken,
   setAccessToken,
 } from "../utils/local-storage";
-import userApi from "../apis/user";
 
 export const AuthContext = createContext();
 
@@ -42,14 +41,9 @@ export default function AuthContextProvider({ children }) {
     setAuthUser(null);
   };
 
-  const updateAuthUser = async (formData) => {
-    const res = await userApi.uploadUserImage(formData);
-    setAuthUser((prev) => ({ ...prev, ...res.data }));
-  };
-
   return (
     <AuthContext.Provider
-      value={{ login, logout, authUser, isAuthUserLoading, updateAuthUser }}
+      value={{ login, logout, authUser, isAuthUserLoading }}
     >
       {children}
     </AuthContext.Provider>

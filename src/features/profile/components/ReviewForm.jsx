@@ -11,7 +11,7 @@ export default function ReviewForm({ onClose }) {
   const [review, setReview] = useState({
     content: "",
     senderId: authUser?.id || "",
-    receiverId: profileUser?.id || "", // ตั้งค่า receiverId จาก profileUser
+    receiverId: profileUser?.id || "",
   });
 
   useEffect(() => {
@@ -26,13 +26,13 @@ export default function ReviewForm({ onClose }) {
   const handleFormSubmitReview = async (event) => {
     event.preventDefault();
     console.log("Form is being submitted...");
-    console.log(review); // Check review before submit
+    console.log(review);
 
     try {
       await axios.post("/api/reviews", review);
-      fetchReviews(); // Fetch reviews after submission
+      fetchReviews();
       if (onClose && typeof onClose === "function") {
-        onClose(); // Close modal after submit
+        onClose();
       }
     } catch (error) {
       console.error("Error submitting review:", error);
@@ -40,7 +40,7 @@ export default function ReviewForm({ onClose }) {
   };
 
   return (
-    <div>
+    <div className="p-4">
       <form onSubmit={handleFormSubmitReview}>
         <label
           className="block text-gray-700 text-sm font-bold mb-2"

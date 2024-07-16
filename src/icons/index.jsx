@@ -1,7 +1,7 @@
 import logo from "../assets/logo.png";
 
 export function FeelbandIcon() {
-  return <img src={logo} className="w-20" />;
+  return <img src={logo} className="w-20 h-auto" alt="Feelband Logo" />;
 }
 
 export function LoaderIcon({ className = null }) {

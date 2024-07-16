@@ -26,13 +26,13 @@ export default function ReportForm({ onClose }) {
   const handleFormSubmitReport = async (event) => {
     event.preventDefault();
     console.log("Form is being submitted...");
-    console.log(report); // Check report before submit
+    console.log(report);
 
     try {
       await axios.post("/api/reports", report);
-      fetchReports(); // Fetch reports after submission
+      fetchReports();
       if (onClose && typeof onClose === "function") {
-        onClose(); // Close modal after submit
+        onClose();
       }
     } catch (error) {
       console.error("Error submitting report:", error);
@@ -40,13 +40,13 @@ export default function ReportForm({ onClose }) {
   };
 
   return (
-    <div>
+    <div className="p-4">
       <form onSubmit={handleFormSubmitReport}>
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="report"
         >
-          report:{" "}
+          Report:{" "}
           {profileUser
             ? `${profileUser.firstName} ${profileUser.lastName}`
             : "Loading..."}

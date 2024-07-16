@@ -23,7 +23,7 @@ const initialInputError = {
   confirmPassword: "",
 };
 
-export default function Register() {
+export default function RegisterForm() {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
   const navigate = useNavigate();
@@ -40,14 +40,11 @@ export default function Register() {
         return setInputError(error);
       }
       setInputError({ ...initialInputError });
-      // Log the form data
       await authApi.register(input);
 
       toast.success("registered successfully. please log in to continue.");
-      console.log("Form data:", input);
       navigate("/login");
     } catch (err) {
-      console.log(err);
       if (err instanceof AxiosError) {
         if (err.response.data.field === "email") {
           setInputError((prev) => ({
@@ -60,59 +57,59 @@ export default function Register() {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <form className="-mt-40" onSubmit={handleSubmitForm}>
-        <div className="w-[300px] space-y-4">
-          <div>
-            <h4 className="text-center text-2xl font-bold mb-4">Register</h4>
-          </div>
-          <div>
-            <Input
-              placeholder="Firstname"
-              value={input.firstName}
-              name="firstName"
-              onChange={handleChangeInput}
-              error={inputError.firstName}
-            />
-          </div>
-          <div>
-            <Input
-              placeholder="Lastname"
-              value={input.lastName}
-              name="lastName"
-              onChange={handleChangeInput}
-              error={inputError.lastName}
-            />
-          </div>
-          <div>
-            <Input
-              placeholder="Email"
-              value={input.email}
-              name="email"
-              onChange={handleChangeInput}
-              error={inputError.email}
-            />
-          </div>
-          <div>
-            <Input
-              placeholder="Password"
-              value={input.password}
-              name="password"
-              onChange={handleChangeInput}
-              error={inputError.password}
-              type="password"
-            />
-          </div>
-          <div>
-            <Input
-              placeholder="Confirm Password"
-              value={input.confirmPassword}
-              name="confirmPassword"
-              onChange={handleChangeInput}
-              error={inputError.confirmPassword}
-              type="password"
-            />
-          </div>
+    <div className="w-full max-w-md bg-white rounded px-8 py-8 mb-4 lg:shadow-md sm:mt-0">
+      <form onSubmit={handleSubmitForm}>
+        <div className="mb-4">
+          <h4 className="text-center text-2xl font-bold mb-4">Register</h4>
+        </div>
+        <div className="mb-4">
+          <Input
+            placeholder="Firstname"
+            value={input.firstName}
+            name="firstName"
+            onChange={handleChangeInput}
+            error={inputError.firstName}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            placeholder="Lastname"
+            value={input.lastName}
+            name="lastName"
+            onChange={handleChangeInput}
+            error={inputError.lastName}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            placeholder="Email"
+            value={input.email}
+            name="email"
+            onChange={handleChangeInput}
+            error={inputError.email}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            placeholder="Password"
+            value={input.password}
+            name="password"
+            onChange={handleChangeInput}
+            error={inputError.password}
+            type="password"
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            placeholder="Confirm Password"
+            value={input.confirmPassword}
+            name="confirmPassword"
+            onChange={handleChangeInput}
+            error={inputError.confirmPassword}
+            type="password"
+          />
+        </div>
+        <div className="flex items-center justify-between">
           <Button bg="stone" color="white" width="full" type="submit">
             Submit
           </Button>

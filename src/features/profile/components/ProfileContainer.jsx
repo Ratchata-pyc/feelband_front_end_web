@@ -40,30 +40,11 @@ const getUserIdFromToken = () => {
   }
 };
 
-// ฟังก์ชันสำหรับตรวจสอบว่าผู้ใช้มีข้อมูลครบถ้วนหรือไม่
-const checkUserInformationComplete = (user) => {
-  const requiredFields = [
-    "firstName",
-    "lastName",
-    "role",
-    "genre",
-    "province",
-    "district",
-    "budget",
-  ];
-  const incompleteFields = requiredFields.filter((field) => !user[field]);
-
-  if (incompleteFields.length > 0) {
-    alert(`กรุณากรอกข้อมูลให้ครบถ้วน: ${incompleteFields.join(", ")}`);
-    return false;
-  }
-
-  return true;
-};
-
 export default function ProfileContainer() {
   const [editOpen, setEditOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false); // state สำหรับ Modal
+  const [modalMessage, setModalMessage] = useState(""); // state สำหรับข้อความใน Modal
   const { profileUser, fetchProfileUser } = useContext(ProfileContext);
   const isAdmin = checkIfAdmin();
   const currentUserId = getUserIdFromToken();
@@ -72,6 +53,27 @@ export default function ProfileContainer() {
   if (!profileUser) return <h1>404!!! User was not found</h1>;
 
   const isOwnProfile = profileUser.id === currentUserId;
+
+  const checkUserInformationComplete = (user) => {
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "role",
+      "genre",
+      "province",
+      "district",
+      "budget",
+    ];
+    const incompleteFields = requiredFields.filter((field) => !user[field]);
+
+    if (incompleteFields.length > 0) {
+      setModalMessage(`โปรดระบุ: ${incompleteFields.join(", ")}`);
+      setModalOpen(true); // เปิด Modal เมื่อข้อมูลไม่ครบถ้วน
+      return false;
+    }
+
+    return true;
+  };
 
   const toggleAvailability = async () => {
     if (profileUser.isAvailable) {
@@ -114,20 +116,26 @@ export default function ProfileContainer() {
   };
 
   return (
-    <div className="mx-40 flex justify-center">
+    <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-40 flex justify-center mt-[60px]">
       <div>
         <div className="flex justify-end">
           <div className="flex justify-end gap-4 mt-4">
             {isOwnProfile ? (
               <>
                 <Button
-                  width="40"
+                  width="24" // ปรับขนาดปุ่มในมุมมองมือถือ
+                  smWidth="40" // ขนาดปุ่มในหน้าจอปกติ
                   bg={profileUser.isAvailable ? "green" : "red"}
                   onClick={toggleAvailability}
                 >
                   {profileUser.isAvailable ? "ON" : "OFF"}
                 </Button>
-                <Button width="40" bg="stone" onClick={() => setEditOpen(true)}>
+                <Button
+                  width="24" // ปรับขนาดปุ่มในมุมมองมือถือ
+                  smWidth="40" // ขนาดปุ่มในหน้าจอปกติ
+                  bg="stone"
+                  onClick={() => setEditOpen(true)}
+                >
                   Edit Profile
                 </Button>
                 <Modal
@@ -143,7 +151,8 @@ export default function ProfileContainer() {
               !isGuest && ( // แสดงปุ่ม Report เฉพาะถ้าผู้ใช้งานไม่ใช่ admin และไม่ใช่ guest
                 <>
                   <Button
-                    width="40"
+                    width="24" // ปรับขนาดปุ่มในมุมมองมือถือ
+                    smWidth="40" // ขนาดปุ่มในหน้าจอปกติ
                     bg="stone"
                     onClick={() => setReportOpen(true)}
                   >
@@ -157,7 +166,8 @@ export default function ProfileContainer() {
             )}
             {isAdmin && !isOwnProfile && (
               <Button
-                width="40"
+                width="24" // ปรับขนาดปุ่มในมุมมองมือถือ
+                smWidth="40" // ขนาดปุ่มในหน้าจอปกติ
                 bg={profileUser.isActive ? "green" : "red"}
                 onClick={toggleActiveStatus}
               >
@@ -167,6 +177,25 @@ export default function ProfileContainer() {
           </div>
         </div>
         <ProfileInfo />
+        {/* Modal สำหรับแสดงข้อความ */}
+        <Modal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          bg="white"
+          width={50}
+        >
+          <div>
+            <h2 className="text-xl font-bold mb-4">
+              กรุณากรอกข้อมูลให้ครบถ้วน
+            </h2>
+            <p>{modalMessage}</p>
+            <div className="flex justify-end mt-4">
+              <Button bg="stone" onClick={() => setModalOpen(false)}>
+                ปิด
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   );
