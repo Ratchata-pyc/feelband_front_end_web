@@ -10,6 +10,7 @@ export const ProfileContext = createContext();
 export default function ProfileContextProvider({ children }) {
   const [profileUser, setProfileUser] = useState(null);
   const [reviews, setReviews] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [reports, setReports] = useState([]); // เพิ่ม state สำหรับรายงาน
 
   const { userId } = useParams();

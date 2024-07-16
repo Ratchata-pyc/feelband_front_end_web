@@ -1,48 +1,50 @@
 import { useState, useEffect } from "react";
 
-export default function Checkbox({ title, list, error, onChange, selected }) {
+export default function Dropdown({ title, list, error, onChange, selected }) {
   const [localSelected, setLocalSelected] = useState(selected);
 
   useEffect(() => {
     setLocalSelected(selected);
   }, [selected]);
 
-  // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของ checkbox
-  const handleChange = (item) => {
-    const newSelected = localSelected?.id === item.id ? null : item;
-    setLocalSelected(newSelected);
-
-    const selectedObject = newSelected
-      ? { id: newSelected.id, label: newSelected.label }
-      : null;
-    onChange(selectedObject);
+  // ฟังก์ชันสำหรับจัดการการเปลี่ยนแปลงของ dropdown
+  const handleChange = (event) => {
+    const selectedItem = list.find(
+      (item) => item.id === parseInt(event.target.value, 10)
+    );
+    setLocalSelected(selectedItem);
+    onChange(selectedItem);
   };
 
   return (
-    <>
-      <label className="block text-gray-700 text-sm font-bold ">{title}</label>
-      <div className="relative">
-        {error && <small className="absolute text-red-500 ">{error}</small>}
-      </div>
-      <div className="flex flex-wrap mt-2">
+    <div className="w-[150px] xs:w-[205px]  md:w-[205px]">
+      <label
+        htmlFor="dropdown-select"
+        className="mb-2 text-sm font-bold text-gray-700"
+      >
+        {title}
+      </label>
+      <select
+        id="dropdown-select"
+        value={localSelected ? localSelected.id : ""}
+        onChange={handleChange}
+        className="w-full focus:outline-none focus:ring-2 border border-gray-300 rounded-md px-2 py-2"
+      >
+        <option value="" disabled>
+          {title}
+        </option>
         {list.map((item) => (
-          <div key={item.id} className="w-1/2">
-            <label className="inline-flex items-center mt-3">
-              <input
-                type="checkbox"
-                className={`form-checkbox h-5 w-5 text-gray-600 ${
-                  error
-                    ? "border-red-500 focus:ring-red-300"
-                    : "border-gray-300 focus:border-stone-500 focus:ring-stone-300"
-                }`}
-                checked={localSelected?.id === item.id}
-                onChange={() => handleChange(item)}
-              />
-              <span className="ml-2 text-gray-700">{item.label}</span>
-            </label>
-          </div>
+          <option key={item.id} value={item.id}>
+            {item.label}
+          </option>
         ))}
-      </div>
-    </>
+      </select>
+
+      {error && (
+        <div className="bg-red-200">
+          <small className="absolute text-red-500">{error}</small>
+        </div>
+      )}
+    </div>
   );
 }

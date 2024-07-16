@@ -72,7 +72,7 @@ export default function ReviewContainer() {
   const isOwnProfile = profileUser.id === currentUserId;
 
   return (
-    <>
+    <div className="w-full h-full bg-white">
       <div className="flex justify-center">
         <div className="py-8 px-4 sm:px-8 md:px-16 min-w-[90vw] max-w-[1300px]">
           <div className="grid grid-cols-1 sm:grid-cols-2">
@@ -117,6 +117,6 @@ export default function ReviewContainer() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

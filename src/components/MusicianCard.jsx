@@ -12,6 +12,7 @@ export default function Musician({
   district,
   budget,
   isActive,
+
   src = defaultProfileImage,
 }) {
   return (
@@ -19,7 +20,7 @@ export default function Musician({
       to={`/profile/${userId}`}
       className="relative flex flex-col border-4 border-stone-400 rounded-lg justify-between min-h-[300px] max-h-[800px] overflow-hidden  xs:w-[300px] xs:h-[400px]  sm:w-[400px] sm:h-[530px]"
     >
-      <div className="relative flex justify-center items-center h-full w-full bg-gray-200">
+      <div className="relative flex justify-center items-center h-full w-full ">
         <div className=" absolute top-0">
           <img
             className="max-w-full max-h-full object-cover"
