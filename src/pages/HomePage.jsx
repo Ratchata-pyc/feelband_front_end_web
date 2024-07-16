@@ -16,7 +16,32 @@ export default function Homepage() {
   }, []);
 
   const groupByGenre = (users) => {
-    const orderedGenres = ["Pop", "Rock", "Jazz", "Blues"];
+    const orderedGenres = [
+      "Pop",
+      "Rock",
+      "Jazz",
+      "Blues",
+      "Hip-Hop/Rap",
+      "Classical",
+      "Country",
+      "Reggae",
+      "R&B",
+      "Soul",
+      "Funk",
+      "Electronic",
+      "Dance",
+      "Metal",
+      "Punk",
+      "Disco",
+      "Folk",
+      "Latin",
+      "Reggaeton",
+      "Gospel",
+      "K-Pop",
+      "Alternative",
+      "Indie",
+      "Ska",
+    ];
     const groupedUsers = users.reduce((groups, user) => {
       const genre = user.genre ? user.genre.genre : "N/A";
       if (!groups[genre]) {
