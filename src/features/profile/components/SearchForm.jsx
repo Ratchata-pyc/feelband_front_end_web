@@ -72,8 +72,6 @@ export default function EditProfileForm({ onClose }) {
       Object.entries(formData).filter(([_, v]) => v !== null && v !== "")
     );
 
-    console.log("Form Data:", formData);
-
     const query = new URLSearchParams(formData).toString();
     navigate(`/search?${query}`);
     onClose();

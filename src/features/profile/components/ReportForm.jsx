@@ -25,8 +25,8 @@ export default function ReportForm({ onClose }) {
 
   const handleFormSubmitReport = async (event) => {
     event.preventDefault();
-    console.log("Form is being submitted...");
-    console.log(report);
+    // console.log("Form is being submitted...");
+    // console.log(report);
 
     try {
       await axios.post("/api/reports", report);

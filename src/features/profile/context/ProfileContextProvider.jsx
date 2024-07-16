@@ -33,14 +33,14 @@ export default function ProfileContextProvider({ children }) {
     }
   };
 
-  const fetchReports = async () => {
-    try {
-      const response = await axios.get(`/api/reports/user/${userId}`);
-      setReports(response.data); // ตั้งค่า state ของรายงาน
-    } catch (error) {
-      console.error("Error fetching reports:", error);
-    }
-  };
+  // const fetchReports = async () => {
+  //   try {
+  //     const response = await axios.get(`/api/reports/user/${userId}`);
+  //     setReports(response.data); // ตั้งค่า state ของรายงาน
+  //   } catch (error) {
+  //     console.error("Error fetching reports:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchProfileUser();
@@ -54,7 +54,7 @@ export default function ProfileContextProvider({ children }) {
 
   useEffect(() => {
     fetchReviews();
-    fetchReports(); // เรียกใช้ fetchReports เมื่อ userId เปลี่ยน
+    // fetchReports(); // เรียกใช้ fetchReports เมื่อ userId เปลี่ยน
   }, [userId]);
 
   const value = {
@@ -63,7 +63,7 @@ export default function ProfileContextProvider({ children }) {
     reviews,
     fetchReviews,
     reports,
-    fetchReports,
+    // fetchReports,
   };
 
   return (

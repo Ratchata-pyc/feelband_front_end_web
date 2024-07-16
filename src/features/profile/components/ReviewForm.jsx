@@ -25,8 +25,8 @@ export default function ReviewForm({ onClose }) {
 
   const handleFormSubmitReview = async (event) => {
     event.preventDefault();
-    console.log("Form is being submitted...");
-    console.log(review);
+    // console.log("Form is being submitted...");
+    // console.log(review);
 
     try {
       await axios.post("/api/reviews", review);
