@@ -12,8 +12,11 @@ export default function Homepage() {
   const navigate = useNavigate();
 
   const handleDataFetched = useCallback((data) => {
-    setUsers(shuffleArray(data));
+    // กรองผู้ใช้ที่ isAvailable = false
+    const availableUsers = data.filter((user) => user.isAvailable);
+    setUsers(shuffleArray(availableUsers));
   }, []);
+  console.log(users);
 
   const groupByGenre = (users) => {
     const orderedGenres = [
@@ -74,7 +77,7 @@ export default function Homepage() {
   const groupedUsers = groupByGenre(users);
 
   return (
-    <div className="w-full  bg-white">
+    <div className="w-full bg-white">
       <div className="block w-full h-[300px] sm:h-[500px] mb-4 sm:mb-8 bg-gradient-to-b from-stone-500 to-white mt-[60px]">
         <img
           src={welcome}
@@ -82,7 +85,7 @@ export default function Homepage() {
           alt="Welcome"
         />
       </div>
-      <div className="shadow-md  mx-4 sm:mx-16 bg-white min-h-[800px] sm:min-h-[1024px] -mt-4 sm:-mt-8 pt-4 sm:pt-8">
+      <div className="shadow-md mx-4 sm:mx-16 bg-white min-h-[800px] sm:min-h-[1024px] -mt-4 sm:-mt-8 pt-4 sm:pt-8">
         <GetAllUserProfile onDataFetched={handleDataFetched} />
         {Object.keys(groupedUsers).map((genre) => (
           <div key={genre} className="mb-4 sm:mb-8">
