@@ -137,7 +137,7 @@ export default function EditProfileForm({ onClose }) {
               />
               <div className="selection-info"></div>
             </div>
-            <div className="flex">
+            <div className="flex w-full gap-2">
               <div className="Role">
                 <div className="flex justify-between">
                   <div className="w-1/2 mr-2">

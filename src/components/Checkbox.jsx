@@ -17,7 +17,7 @@ export default function Dropdown({ title, list, error, onChange, selected }) {
   };
 
   return (
-    <div className="w-[150px] xs:w-[205px]  md:w-[205px]">
+    <div className="w-[175px] xs:w-[205px]  md:w-[205px]">
       <label
         htmlFor="dropdown-select"
         className="mb-2 text-sm font-bold text-gray-700"
