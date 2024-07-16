@@ -82,7 +82,7 @@ export default function Homepage() {
           alt="Welcome"
         />
       </div>
-      <div className="shadow-md mx-4 sm:mx-16 bg-white min-h-[800px] sm:min-h-[1024px] -mt-4 sm:-mt-8 pt-4 sm:pt-8">
+      <div className="shadow-md  mx-4 sm:mx-16 bg-white min-h-[800px] sm:min-h-[1024px] -mt-4 sm:-mt-8 pt-4 sm:pt-8">
         <GetAllUserProfile onDataFetched={handleDataFetched} />
         {Object.keys(groupedUsers).map((genre) => (
           <div key={genre} className="mb-4 sm:mb-8">
@@ -96,7 +96,7 @@ export default function Homepage() {
                 {genre}
               </h2>
             </div>
-            <div className="items-center xs:flex w-full justify-center">
+            <div className="items-center xs:flex w-full justify-start">
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-4 pl-2 pr-2 sm:pl-4 sm:pr-4 pb-4 sm:pb-8 ">
                 {groupedUsers[genre]
                   .slice(0, expandedGenres[genre] ? undefined : 4)
