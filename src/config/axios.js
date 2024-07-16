@@ -2,7 +2,8 @@ import axios from "axios";
 
 import { getAccessToken, removeAccessToken } from "../utils/local-storage";
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.baseURL = "https://feelband-back-end-api.onrender.com";
 
 axios.interceptors.request.use(
   (config) => {
